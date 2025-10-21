@@ -1,0 +1,73 @@
+---
+title: "Project title"
+author: "Minh Tran,"
+output: pdf_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include = FALSE, message = FALSE, warning = FALSE}
+
+library(mosaic)
+library(tidyverse)
+library(survey)
+library(knitr)
+
+```
+
+```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
+cat('\\pagebreak')
+```
+
+
+# Abstract
+## One paragraph summary of the purpose, dataset, main findings, and interpretation.
+
+```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
+cat('\\pagebreak')
+```
+
+# Introduction
+
+## Brief description of the dataset (subjects, when/where/how collected, purpose).
+
+## Research questions
+
+## Mini codebook of variables selected (include details on recoding values, missing values, and variable treatment)
+
+```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
+cat('\\pagebreak')
+```
+
+# Statistical Results
+
+## One subsection per research question.
+
+## Include summary statistics, tables, graphs, and statistical tests.
+
+## Write a clear narrative (“tell the story of your data”)
+
+```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
+cat('\\pagebreak')
+```
+
+# Conclusion and Future Direction
+
+## Summarize main findings.
+
+## Discuss limitations of your dataset.
+
+## Suggest possible extensions or improvements.
+
+```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
+cat('\\pagebreak')
+```
+
+# Appendix (R code)
+
+
+
+
