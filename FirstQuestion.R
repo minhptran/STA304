@@ -2,6 +2,8 @@ library(dplyr)
 library(mosaic)
 library(ggplot2)
 
+# Question: Is there a difference in median after tax household income between 
+# 2015 and 2020?
 income <- read.csv("incomes_cleaned.csv", check.names = FALSE)
 
 # filter by the first 11 rows of each geographic region that is not Canada 
@@ -42,6 +44,7 @@ n2020 = 156189
 n2015 = 156189
 
 # Two sample t-test (unequal variances)
+## T-test since we do not know the population variance 
 
 test <- t.test(inc2020, inc2015, alternative = "two.sided", var.equal = FALSE)
 
@@ -60,14 +63,11 @@ p_val
 ## Data is continuous
 ### Uh does someone know how to do this one
 
-## Randomly sampled from a population
-### This one is probably true since it's data from a census
+## Data is independent 
+### This one is probably true since the data are from two different time periods
 
-## Homogeneity of variance
-### can see that its similar enough
 
-## Distribution is approximately normal.
-
+## Distribution of data is approximately normal.
 ### We use boxplot, histogram and QQ plot for this
 
 # 3 by 2 panel 
