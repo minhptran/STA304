@@ -30,6 +30,9 @@ mean5p <- mean(inc5p)
 var4 <- var(inc4)
 var5p <- var(inc5p)
 
+summary(inc4)
+summary(inc5p)
+
 mean4
 mean5p
 

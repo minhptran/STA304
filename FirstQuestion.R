@@ -34,19 +34,17 @@ mean_median_2015 <- mean(inc2015)
 var_median_2020  <- var(inc2020)   
 var_median_2015  <- var(inc2015)
 
-mean_median_2020
-mean_median_2015
+summary(inc2020)
+summary(inc2015)
 
 var_median_2020
 var_median_2015
-
-n2020 = 156189
-n2015 = 156189
 
 # Two sample t-test (unequal variances)
 ## T-test since we do not know the population variance 
 
 test <- t.test(inc2020, inc2015, alternative = "two.sided", var.equal = FALSE)
+test
 
 p_val <- test$p.value
 

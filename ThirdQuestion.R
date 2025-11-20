@@ -4,6 +4,7 @@ library(ggplot2)
 # Question: Is there a difference in median income between Households with and 
 # without children?
 
+# Do households with children earn more than households without children?
 income <- read.csv("incomes_cleaned.csv", check.names = FALSE)
 
 income_sub <- income %>%
@@ -28,8 +29,8 @@ mean_with_children <- mean(with_children)
 var_without <- var(without_children)
 var_with <- var(with_children)
 
-mean_without_children
-mean_with_children
+summary(without_children)
+summary(with_children)
 
 var_without
 var_with
