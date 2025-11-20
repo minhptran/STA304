@@ -46,9 +46,9 @@ test
 p_val <- test$p.value
 p_val
 
-# Since the p-value is less than 0.05, we reject H0, and conclude that there is 
-# there is a difference in income between household of 4 persons and households 
-# of 5 or more persons
+## Since the p-value is less than 0.05, we reject H0, and conclude that there is 
+## there is a difference in income between household of 4 persons and households 
+## of 5 or more persons
 
 
 # Assumptions
@@ -64,11 +64,11 @@ p_val
 ### We use boxplot, histogram, and qq plot
 par(mfrow=c(3,2))
 
-box4 = boxplot(inc4, ylab = "Median income of 4 person households", main = "Boxplot of Median Income of 4 person housholds")
-box5p = boxplot(inc5p, ylab = "Median income of 5 or more person households", main = "Boxplot of Median Income of 5 or more person housholds")
+box4 = boxplot(inc4, ylab = "Median income", main = "Boxplot of Median Income of 4 person housholds")
+box5p = boxplot(inc5p, ylab = "Median income", main = "Boxplot of Median Income of 5 or more person housholds")
 
-hist4 = hist(inc4, xlab = "Median Income of 4 person households", main = "Histogram of Median Income of 4 Person Households")
-hist5p = hist(inc5p, xlab = "Median Income of 5 or more person households", main = "Histogram of Median Income of 5 or more Person Households")
+hist4 = hist(inc4, xlab = "Median Income", main = "Histogram of Median Income of 4 Person Households")
+hist5p = hist(inc5p, xlab = "Median Income", main = "Histogram of Median Income of 5 or more Person Households")
 
 qq4 <- qqnorm(inc4, main = "Normal Q-Q Plot for Median income of 4 Person Households")
 qqline4 <- qqline(inc4,col = "red")

@@ -73,12 +73,12 @@ p_val
 # 3 by 2 panel 
 par(mfrow=c(3,2))
 
-box2020 = boxplot(inc2020, ylab = "2020 Median After Tax Incomes", main = "Boxplot of 2020 Median After Tax Income")
-box2015 = boxplot(inc2015, ylab = "2015 Median After Tax Incomes", main = "Boxplot of 2015 Median After Tax Income")
+box2020 = boxplot(inc2020, ylab = "Median After Tax Incomes", main = "Boxplot of 2020 Median After Tax Income")
+box2015 = boxplot(inc2015, ylab = "Median After Tax Incomes", main = "Boxplot of 2015 Median After Tax Income")
 
-hist2020 = hist(inc2020, xlab = "Median 2020 incomes", main = "Histogram of 2020 median after taxincomes")
+hist2020 = hist(inc2020, xlab = "Median After Tax Incomes", main = "Histogram of 2020 median after taxincomes")
 
-hist2015 = hist(inc2015, xlab = "Median 2015 incomes", main = "Histogram of 2015 median after tax incomes")
+hist2015 = hist(inc2015, xlab = "Median After Tax Incomes", main = "Histogram of 2015 median after tax incomes")
 
 qq2020 <- qqnorm(inc2020, main = "Normal Q-Q Plot for 2020 Median After Tax Income")
 qqline2020 <- qqline(inc2020,col = "red")
