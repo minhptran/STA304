@@ -6,6 +6,12 @@ output: pdf_document
 ---
 
 
+```{r, include = TRUE, message = FALSE, warning = FALSE, echo = FALSE}
+library(dplyr)
+library(ggplot2)
+income <- read.csv("incomes_cleaned.csv", check.names = FALSE)
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -67,6 +73,53 @@ cat('\\pagebreak')
 # Statistical Results
 
 ## Question 1: Is there a difference in median after tax household income between 2015 and 2020?
+```{r, include = TRUE, message = FALSE, warning = FALSE, echo = FALSE}
+income_sub <- income%>%
+  filter(GEO != 'Canada') %>%
+  filter(!is.na(`Household type including census family structure  (11)`))
+
+income_sub <- income%>%
+  filter(
+    !is.na(`Median household after-tax income (2020)`),
+    !is.na(`Median household after-tax income (2015)`),
+    `Median household after-tax income (2020)` != 0,
+    `Median household after-tax income (2015)` != 0
+  )
+
+inc2020 <- income_sub$`Median household after-tax income (2020)`
+inc2015 <- income_sub$`Median household after-tax income (2015)`
+
+
+var_median_2020  <- var(inc2020)   
+var_median_2015  <- var(inc2015)
+
+summary(inc2020)
+summary(inc2015)
+
+var_median_2020
+var_median_2015
+
+test <- t.test(inc2020, inc2015, alternative = "two.sided", var.equal = FALSE)
+test
+
+p_val <- test$p.value
+p_val
+
+par(mfrow = c(2,1))
+# Boxplots
+box2020 = boxplot(inc2020, ylab = "Median After Tax Incomes", main = "Boxplot of 2020 Median After Tax Income")
+box2015 = boxplot(inc2015, ylab = "Median After Tax Incomes", main = "Boxplot of 2015 Median After Tax Income")
+par(mfrow = c(2,1))
+# Histograms
+hist2020 = hist(inc2020, xlab = "Median After Tax Incomes", main = "Histogram of 2020 median after taxincomes")
+hist2015 = hist(inc2015, xlab = "Median After Tax Incomes", main = "Histogram of 2015 median after tax incomes")
+par(mfrow = c(2,1))
+# QQ Plots
+qq2020 <- qqnorm(inc2020, main = "Normal Q-Q Plot for 2020 Median After Tax Income")
+qqline2020 <- qqline(inc2020,col = "red")
+qq2015 <- qqnorm(inc2015, main = "Normal Q-Q Plot for 2015 Median After Tax Income")
+qqline2015 <- qqline(inc2015,col = "red")
+```
 
 We performed a Welch's two sample t-test since the population variance is unknown, with Null Hypothesis (H0) being the median is equal between 2015 and 2020 (inc2020 = inc2015), and the Alternative Hypothesis (H1) being the medians are not equal (inc2020 != inc2015).
 
@@ -83,6 +136,61 @@ cat('\\pagebreak')
 
 ## Question 2: Is there a significant difference in income between households of 5 or more people and 4 persons (in 2020)?
 
+
+```{r, include = TRUE, message = FALSE, warning = FALSE, echo = FALSE}
+income_sub <- income %>%
+  filter(GEO != 'Canada') %>%
+  filter(
+    `Household size (7)` %in% c("4 persons", "5 or more persons"),
+    !is.na(`Median household total income (2020)`),
+    `Median household total income (2020)` != 0
+  )
+
+# Attaching 4 persons household rows
+inc4 <- income_sub %>%
+  filter(`Household size (7)` == "4 persons") %>%
+  pull(`Median household total income (2020)`)
+
+# Attaching 5 or more persons household rows
+inc5p <- income_sub%>%
+  filter(`Household size (7)` == "5 or more persons") %>%
+  pull(`Median household total income (2020)`)
+
+var4 <- var(inc4)
+var5p <- var(inc5p)
+
+summary(inc4)
+summary(inc5p)
+
+var4
+var5p
+
+test <- t.test(inc4, inc5p, alternative = "two.sided", var.equal = FALSE)
+test
+
+p_val <- test$p.value
+p_val
+
+par(mfrow=c(3,2))
+
+# Boxplots
+box4 = boxplot(inc4, ylab = "Median income", main = "Boxplot of Median Income of 4 person housholds")
+box5p = boxplot(inc5p, ylab = "Median income", main = "Boxplot of Median Income of 5 or more person housholds")
+
+# Histograms
+hist4 = hist(inc4, xlab = "Median Income", main = "Histogram of Median Income of 4 Person Households")
+hist5p = hist(inc5p, xlab = "Median Income", main = "Histogram of Median Income of 5 or more Person Households")
+
+# QQ plots
+qq4 <- qqnorm(inc4, main = "Normal Q-Q Plot for Median income of 4 Person Households")
+qqline4 <- qqline(inc4,col = "red")
+
+qq5p <- qqnorm(inc5p, main = "Normal Q-Q Plot for Median income of 5 or more Person Households")
+qqline5p <- qqline(inc5p, col = "red")
+
+
+```
+
 We performed a Welch's two sample t-test since the population variance is unknown. The Null Hypothesis (H0) is The median income between households of 4 persons and 5 or more persons are the same (inc4 = inc5p), and the Alternative Hypothesis (H1) is The median income are different.
 
 The p-value we got was less than 2.2e-16, which is extremely small, much smaller than our significance level of 5%. Thus, we reject H0, and conclude that the Median Income between Households with 4 persons and 5 or more persons is different. 
@@ -96,6 +204,65 @@ cat('\\pagebreak')
 ```
 
 ## Question 3: Is there a difference in median income between Households with and without children? 
+
+```{r, include = TRUE, message = FALSE, warning = FALSE, echo = FALSE}
+# We check data by the Household type... column
+income_sub <- income %>%
+  filter(GEO != 'Canada') %>%
+  filter(
+    # Include the data if the row is 'Without children' or 'With children' 
+    `Household type including census family structure  (11)` %in% c("Without children", "With children"),
+    !is.na(`Median household total income (2020)`),
+    `Median household total income (2020)` != 0
+  )
+
+# Attaching the data
+without_children <- income_sub %>%
+  filter(`Household type including census family structure  (11)` == "Without children") %>%
+  pull(`Median household total income (2020)`)
+
+with_children <- income_sub %>%
+  filter(`Household type including census family structure  (11)` == "With children") %>%
+  pull(`Median household total income (2020)`)
+
+var_without <- var(without_children)
+var_with <- var(with_children)
+
+summary(without_children)
+summary(with_children)
+
+var_without
+var_with
+
+test <- t.test(without_children, with_children, alternative = "two.sided", var.equal = FALSE)
+test
+
+p_val <- test$p.value
+p_val
+
+par(mfrow=c(3,1))
+
+# Boxplot
+withoutbox <- boxplot(without_children, ylab = "Median income", main = "Boxplot of Median Income of Households Without Children in 2020")
+
+# Histogram
+withoutHist <- hist(without_children, xlab = "Median Income", main = "Histogram of Median Income of Households Without Children in 2020")
+
+# QQ plot
+qqwithout <- qqnorm(without_children, main = "Normal Q-Q Plot for Median Income of Household Without Children")
+qqlinewithout <- qqline(without_children, col = "red")
+
+par(mfrow=c(3,1))
+# Boxplot
+withbox <- boxplot(with_children, ylab = "Median income", main = "Boxplot of Median Income of Households With Children in 2020")
+
+# Histogram
+withHist <- hist(with_children, xlab = "Median Income", main = "Histogram of Median Income of Households With Children in 2020")
+
+# QQ plot
+qqwith <- qqnorm(with_children, main = "Normal Q-Q Plot for Median Income of Household Without Children")
+qqlinewith <- qqline(with_children, col = "red")
+```
 
 We performed a Welch's two sample t-test since the population variance is unknown. The Null Hypothesis (H0) is there is no difference in median income between households with and without children (incW0 = incW) and the Alternative Hypothesis (H1) is the median household incomes are different (incW0 != incW).
 
@@ -350,7 +517,7 @@ qqline5p <- qqline(inc5p, col = "red")
 
 
 ```
-### From the boxplot and the qq-plot, we can see that the t-test assumptions are not satisfied
+
 
 
 ```{r, results='asis', eval=(opts_knit$get('rmarkdown.pandoc.to') == 'latex'), echo = FALSE}
