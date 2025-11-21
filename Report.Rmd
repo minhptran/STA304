@@ -156,7 +156,7 @@ cat('\\pagebreak')
 # Appendix (R code) 
 # Note that each question is done in a seperate R script, will be provided upon request.
 
-## Question 1
+## Question 1: Is there a difference in median after tax household income between 2015 and 2020?
 
 ### Load libraries
 ```{r, include = TRUE, message = FALSE, warning = FALSE}
@@ -164,7 +164,9 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Question: Is there a difference in median after tax household income between 2015 and 2020?
+
+
+### Read data
 ```{r, include = TRUE, message = FALSE, warning = FALSE}
 income <- read.csv("incomes_cleaned.csv", check.names = FALSE)
 ```
@@ -259,9 +261,7 @@ cat('\\pagebreak')
 ```
 
 
-## Question 2
-
-### Question: Is there a significant difference in income between households of 5 or more people and 4 persons (in 2020)?
+## Question 2: Is there a significant difference in income between households of 5 or more people and 4 persons (in 2020)?
 
 ### Load Libraries
 ```{r, include = TRUE, message = FALSE, warning = FALSE}
@@ -357,9 +357,7 @@ qqline5p <- qqline(inc5p, col = "red")
 cat('\\pagebreak')
 ```
 
-## Question 3
-
-### Question: Is there a difference in median income between Households with and without children?
+## Question 3: Is there a difference in median income between Households with and without children?
 
 ### Do households with children earn more than households without children?
 
